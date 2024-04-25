@@ -1,0 +1,36 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Additional step after Checkout code
+    - name: Additional step after Checkout
+      run: echo "This runs after Checkout code step"
+
+    - name: Install Node.js and dependencies
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    # Additional step after Install Node.js and dependencies
+    - name: Additional step after Install Node.js and dependencies
+      run: echo "This runs after Install Node.js and dependencies step"
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Set up environment variables
+      run: echo "mongoUrl=${{ secrets.MONGOURL }}" >> $GITHUB_ENV
+
+    - name: Run tests with Jest
+      run: npm test
