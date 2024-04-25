@@ -50,11 +50,13 @@ server.use(errorHandlerMiddleware);
 const portNo = process.env.NODE_ENV === 'production' ? process.env.PORT : 0;
 const Mongo_URI = process.env.mongoURL;
 
+let httpServer; // Declare a variable to store the HTTP server instance
+
 const startService = async () => {
     try {
         await DBConnection(Mongo_URI)
         .then(() => console.log('DB Connected'))
-        const httpServer = server.listen(portNo, () => {
+        httpServer = server.listen(portNo, () => {
             const actualPort = httpServer.address().port;
             console.log(`Server is listening on port ${actualPort}...`);
         })
@@ -65,7 +67,18 @@ const startService = async () => {
     }
 }
 
+const closeService = async () => {
+    try {
+        if (httpServer) {
+            await httpServer.close();
+            console.log('Server closed.');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 startService();
 
-module.exports = { server, startService };
+module.exports = { server, startService, closeService };
 

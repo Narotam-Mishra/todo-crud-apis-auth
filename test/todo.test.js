@@ -2,7 +2,7 @@
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const { server, startService } = require('../index'); 
+const { server, startService, closeService } = require('../index'); 
 const UserModel = require('../models/userSchema');
 const Todo = require('../models/todoSchema');
 
@@ -21,10 +21,7 @@ describe('Authentication and Todo APIs', () => {
 
   // Add afterAll hook to close the server after all tests are done
   afterAll(async () => {
-    // Close the server after tests
-    console.log('Closing the server...');
-    await httpServer.close();
-    console.log('Server closed.');
+    closeService();
   });
 
   describe('User Authentication API', () => {
