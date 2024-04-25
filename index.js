@@ -2,7 +2,7 @@
 require('dotenv').config();
 require('express-async-errors');
 
-// extra security packages
+// security package
 const cors = require('cors')
 
 // express
@@ -15,7 +15,7 @@ const DBConnection = require('./db/connectDB');
 // authentication middleware import to protect user
 const authenticateUser = require('./middleware/authentication')
 
-// auth & job router imports
+// auth & todo router imports
 const authRouter = require('./routes/authRoutes');
 const todoRouter = require('./routes/todoRoutes');
 
@@ -29,17 +29,18 @@ server.use(express.json());
 // middleware setup for additional packages
 server.use(cors())
 
+// to server static html file
 server.use(express.static('./public'));
 
 // home route
 server.get('/', (req,res) => {
-    res.send('Welcome Todo List App');
+    res.send('Welcome to Todo List App');
 })
 
 // login & register routes
 server.use('/api/v1/auth',authRouter);
 
-// jobsAPI route
+// router path setup for todos-APIs
 server.use('/api/v1/todos', authenticateUser, todoRouter);
 
 server.use(notFoundMiddleware);

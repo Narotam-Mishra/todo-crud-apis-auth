@@ -1,8 +1,9 @@
 
 const User = require('../models/userSchema')
 const jwt = require('jsonwebtoken');
+const Todo = require('../models/todoSchema');
 
-const { UnauthenticatedError } = require('../errors/index');
+const { UnauthenticatedError, UnauthorizedError } = require('../errors/index');
 
 // auth middleware setup to verfiy jwt token
 const auth = async (req,res,next) => {
@@ -16,11 +17,15 @@ const auth = async (req,res,next) => {
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
        
-        // const user = User.findById(payload.id).select('-password')
-        // req.user = user;
+        // Fetch the user from the database based on the user ID in the JWT payload
+        const user = await User.findById(payload.userId);
 
-        // attach the user to job routes
-        req.user = {userId:payload.userId, name:payload.name}
+        if (!user) {
+            throw new UnauthenticatedError('Authentication invalid');
+        }
+
+        // Attach the user object to the request
+        req.user = { userId: payload.userId };
         next();
     } catch (error) {
         throw new UnauthenticatedError('Authentication invalid')
