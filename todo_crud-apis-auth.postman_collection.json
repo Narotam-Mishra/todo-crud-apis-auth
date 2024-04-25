@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "1e8ff0f5-6f4b-40c9-9497-0d2b98271b99",
+		"name": "todo_crud-apis-auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19928819"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "loginUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJSON = pm.response.json();\r",
+									"const jwt = responseJSON.token;\r",
+									"\r",
+									"pm.environment.set('JWT', `${jwt}`);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"matt.079@gmail.com\",\r\n    \"password\": \"Matty@99\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://todo-crud-apis-with-auth.onrender.com/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"todo-crud-apis-with-auth",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registerUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Annie\",\r\n    \"email\": \"annie.03@gmail.com\",\r\n    \"password\": \"Annie@12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://todo-crud-apis-with-auth.onrender.com/api/v1/auth/register",
+							"protocol": "https",
+							"host": [
+								"todo-crud-apis-with-auth",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "todo-APIs",
+			"item": [
+				{
+					"name": "createTodo",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Always eat good\",\r\n    \"description\": \"Good food are part of healthy life style\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://todo-crud-apis-with-auth.onrender.com/api/v1/todos/",
+							"protocol": "https",
+							"host": [
+								"todo-crud-apis-with-auth",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"todos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://todo-crud-apis-with-auth.onrender.com/api/v1/todos",
+							"protocol": "https",
+							"host": [
+								"todo-crud-apis-with-auth",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleTodo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://todo-crud-apis-with-auth.onrender.com/v1/todos/662a454e18195f90f990c097",
+							"protocol": "https",
+							"host": [
+								"todo-crud-apis-with-auth",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"v1",
+								"todos",
+								"662a454e18195f90f990c097"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTodo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Solve DSA questions\",\r\n    \"description\": \"DSA is very important for Problem Solving\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://todo-crud-apis-with-auth.onrender.com/api/v1/todos/662a454e18195f90f990c097",
+							"protocol": "https",
+							"host": [
+								"todo-crud-apis-with-auth",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"todos",
+								"662a454e18195f90f990c097"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTodo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://todo-crud-apis-with-auth.onrender.com/api/v1/todos/662a454e18195f90f990c097",
+							"protocol": "https",
+							"host": [
+								"todo-crud-apis-with-auth",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"todos",
+								"662a454e18195f90f990c097"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
