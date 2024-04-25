@@ -72,6 +72,8 @@
 - Written a Dockerfile to define the application's environment and dependencies.
 - Build a Docker image for the application.
 
+- Note - I have used local environment URL (mongodb://localhost:27017/mydb.todo-auth) for MongoDB in dockerfile
+
 ### Configured CI/CD Pipelines
 - Set up Continuous Integration (CI) pipelines to automate testing.
 - Used a CI/CD platform (e.g., GitHub Actions) to trigger builds and tests on code changes.
