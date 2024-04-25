@@ -46,19 +46,26 @@ server.use('/api/v1/todos', authenticateUser, todoRouter);
 server.use(notFoundMiddleware);
 server.use(errorHandlerMiddleware);
 
-const portNo = process.env.PORT || 6464;
+// Set the port based on the environment
+const portNo = process.env.NODE_ENV === 'production' ? process.env.PORT : 0;
 const Mongo_URI = process.env.mongoURL;
 
 const startService = async () => {
     try {
         await DBConnection(Mongo_URI)
         .then(() => console.log('DB Connected'))
-        server.listen(portNo, () => {
-            console.log(`Server is listening on port ${portNo}...`);
+        const httpServer = server.listen(portNo, () => {
+            const actualPort = httpServer.address().port;
+            console.log(`Server is listening on port ${actualPort}...`);
         })
+        // Return the HTTP server instance for closing later
+        return httpServer;
     } catch (error) {
         console.log(error);
     }
 }
 
 startService();
+
+module.exports = { server, startService };
+

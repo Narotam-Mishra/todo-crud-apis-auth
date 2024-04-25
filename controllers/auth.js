@@ -5,10 +5,6 @@ const { BadRequestError, UnauthenticatedError } = require('../errors/index');
 
 // register setup
 const register = async (req,res) => {
-    // const {name, email, password } = req.body;
-
-    // const tempUser = {name,email,password:hashedPassword}
-    
     const user = await UserModel.create({...req.body })
     const token = user.createJWT();
     
