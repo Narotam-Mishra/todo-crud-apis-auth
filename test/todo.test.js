@@ -21,7 +21,7 @@ describe('Authentication and Todo APIs', () => {
 
   // Add afterAll hook to close the server after all tests are done
   afterAll(async () => {
-    closeService();
+    await closeService();
   });
 
   describe('User Authentication API', () => {
